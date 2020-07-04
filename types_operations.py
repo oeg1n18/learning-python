@@ -145,4 +145,5 @@ file.close()
 data = open('data.bin', 'rb').read() #oepn/read binary data File
 data[4:8] #slice bytes in the middle
 list(data) #a sequency of 8-bit bytes
-struct.unpack('>i4sh', data) #Unpack into objects again
+struct.unpack('>i4sh', data) #Unpack into objects again returns to original
+                             # alfphanumeric
