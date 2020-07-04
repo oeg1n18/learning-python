@@ -55,18 +55,18 @@ L = [123, 'spam', 1.23] #decleration
 len(L) #returns length
 L[0] #indexing
 L[:-1] # slicing a list returns a new Lists
-l + [4,5,6] #concat/repeat makes new lists too
+L + [4,5,6] #concat/repeat makes new lists too
 
 # Type specific operations
 L.append('NI') #Growing: add object to the append
 L.pop(2) #Shrinking: delete an item in the middle
 
-M - ['bb', 'aa', 'cc']
+M = ['bb', 'aa', 'cc']
 M.sort() #sorts them into alphabecital order
 M.reverse() #reverses the order
 #Nesting
-M = [[1,2,3]
-     [4,5,6]
+M = [[1,2,3],
+     [4,5,6],
      [7,8,9]]
 M[1] #Geet row 2
 M[1][2] #get row 2, then get item 3 within Growing
@@ -109,7 +109,7 @@ for key in sorted(D):
 T = (1,2,3,4)
 len(T) #returns number of items
 T + (5,6) #Concatenation
-T[4] #indexing
+T[2] #indexing
 T.index(4), #returns 3 as 4 appears at index 3
 T.count(4) # 4 appears once
 # cannot .append(**) a Tuples
@@ -118,7 +118,31 @@ T.count(4) # 4 appears once
 #====================== Files ================================================
 # Can be used to read and write text memos, audio clips, Excel documents, saved
 # email messages, and whatever else you have on your machine
-f = open('data.txt', '2')
+f = open('data.txt', 'w') #creating a new file to write to
 f.write('Hello ')
 f.write('World')
 f.close()
+
+f = open('data.txt')
+text = f.read()
+text #returns the text in the Files
+text.split() #splits text by spaces File content is alwasy string.
+
+for line in open('data.txt'): print(line)
+
+#binary byte Files
+# useful for processing media, acessing data created by C programs. Pythons
+# struct module can bothe create and unpack packed binary data. raw bytes
+# that recod values that are not Python objects to be written to a file in
+# binary mode
+
+import struct
+packed = struct.pack('>i4sh', 7, b'spam', 8) #create packed binary data
+file = open('data.bin', 'wb')  #open binary output Files
+file.write(packed) #write packed binary data
+file.close()
+
+data = open('data.bin', 'rb').read() #oepn/read binary data File
+data[4:8] #slice bytes in the middle
+list(data) #a sequency of 8-bit bytes
+struct.unpack('>i4sh', data) #Unpack into objects again
