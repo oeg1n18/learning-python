@@ -20,8 +20,14 @@ q = int('10000000', 2)
 # Math tools
 import math
 math.pi
-math.e  
+math.e
 math.sin(2*math.pi/180)
 math.sqrt(5)
 pow(2,4)
 math.floor(2.567) #lowest round to 2
+
+import random
+random.random() #random floats, integers,choices, shuffles
+random.randint(1, 10) #random int between 1 and 10
+suits = ['hearts', 'clubs', 'diamonds', 'spades']
+random.shuffle(suits) #pick a random from the lsit
