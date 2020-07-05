@@ -31,4 +31,32 @@ random.random() #random floats, integers,choices, shuffles
 random.randint(1, 10) #random int between 1 and 10
 suits = ['hearts', 'clubs', 'diamonds', 'spades']
 random.shuffle(suits) #pick a random from the lsit
-print('hello world')
+
+# sets =======================================
+# Sets are an unordered collection of unique and immutable objects
+# By definition, an item appears only once in a set, no matter how many
+# times it is added. Seths have a variety of applications in numeric 
+# and database focused work
+
+# for python 2.7 and earlier
+x = set('abcde') #each alpha-numeric is a an item in the set
+y = set('bdsyx') 
+x-y #difference
+x|y #union
+x & y #intersection
+x ^ y #symetric difference (XOR)
+x > y #superset
+x < y #subset
+
+engineers = {'bob', 'sue', 'ann', 'vic'}
+managers = {'tom', 'sue'}
+'bob' in engineers #returns rue
+engineers & managers #who is both engineer and manager
+engineers | managers #all people in either catageory 
+engineers - managers #engineers who are not managers
+managers - engineers #managers who are not engineers
+engineers > managers #are all managers engineers? 
+{'bob', 'sue'} < engineers #are both engineers?
+(managers | engineers) > managers #all people is a superset of managers
+managers ^ engineers #who is in one but not in both
+(managers | engineers) - (managers ^ engineers) #intersection
