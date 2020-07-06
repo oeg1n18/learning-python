@@ -35,6 +35,8 @@ z.display() # finds overridden method in Second Class
 # 'from modulename import classname' now you can accesss the imported class as if it where 
 # written in the working module.
 
+# self is used to reference the instance of the class.
+
 class ThirdClass(SecondClass): # inherit form second class
     def __init__(self, value): # On "ThirdClass(value)"
         self.data = value
@@ -55,3 +57,30 @@ print(b) #[ThirdClass: abcxyz]
 
 a.mul(3) # mul:changes instance in place
 print(a) #returns mul: changes instance in place
+
+#============================== Larger Class ========================================
+
+class Person: 
+    def __init__(self, name, job=None, pay=0): #constructor takes three arguments
+        self.name = name # Fill out fields when created
+        self.job = job #self is the new instance object
+        self.pay = pay
+""" self is the newly created instance object, and name, job, and pay become state information
+descriptive data saved on an object for later used. 'job' is a local variable in the scope of 
+the __init__ function, but self.job is an atribute of the instance that's the implied subject
+ of the method call. They are two different variables """
+
+bob = Person('Bob Smith')
+sue = Person('Sue Jones', job='dev', pay=1000000)
+print(bob.name, bob.pay)
+print(sue.name, sue.pay)
+
+""" say we want to import this module into another but do not want any of the output statements
+we can do this doing the following method. As once imported the __name__ is no longer '__main__'"""
+
+if __name__=='__main__':
+    bob = Person('Bob Smith')
+    sue = Person('Sue Jones', job='dev', pay=1000000)
+    print(bob.name, bob.pay)
+    print(sue.name, sue.pay)
+
