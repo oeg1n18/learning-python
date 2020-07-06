@@ -5,6 +5,20 @@
 # nonlocal declares enclosing function variables that are to be assigned
 #Arguments are passed by assignment (object reference)
 
+import Statements #equivalent of include in c++
+#if the module is treated as an object and you can access variables form is 
+# using modulename.variablename syntax
+# import module code will only be executed once. if you wish to re-run it 
+# you must use reload
+from imp import reload #actually import the reload 
+reload(Statements)
+
+""" Module statements run on the first import. 
+    Top-level assignments create module attributes e.g. the imported module becomes
+    a namespace and the import name an object.
+"""
+
+
 def name(arg1, arg2): 
     print('im a function and my args are', arg1, arg2)
 
