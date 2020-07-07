@@ -40,3 +40,16 @@ import matplotlib.pyplot as plt
 plt.plot(x,y) #plots the graph
 plt.show()
 
+#============== Numpy in 2d 
+a = [[11,12,13,14], [21,22,23],[31,32,33]]
+A = np.array(a)
+A.ndim(a) #ndim obtains the number of dimensions (rank of an array) in this case it is 2
+A.shape #returns a tuple returns (3,3) (num of nested arrays, number of items per list)
+A.size #returns 9, the number of elements
+
+B = np.array(a)
+Y = A + B #matrix addition
+Y = 2*Y #multiplying matrix by a scalar
+H = A * B #hattemard product
+C = np.dot(A,B) # dot product matrix multiplication
+
