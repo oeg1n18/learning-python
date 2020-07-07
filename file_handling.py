@@ -96,3 +96,6 @@ Z = df2['Segment'].unique()
 print('Using .unique() to get all of the unique items in a particular column')
 print(Z)
 print('\n', '\n')
+
+#to save a new data frame you can use the to_csv() method
+df2.to_csv('Saved_dataframe.csv')
