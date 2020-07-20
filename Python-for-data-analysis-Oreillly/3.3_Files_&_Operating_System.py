@@ -26,6 +26,7 @@ import sys
 sys.getdefaultencoding() #reutrns 'utf-8'
 
 #seek changes the file position to the indicated bte in the file: 
+
 f.seek(3)
 
 f.close()
@@ -39,4 +40,4 @@ with open('tmp.txt') as f:
     lines = f.readlines() #lines is a list with each string of the list representing a line of tmp.txt 
                           #which was wrtten from test.
                 
-                
+
