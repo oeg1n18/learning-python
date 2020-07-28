@@ -2,7 +2,7 @@
 <html>
 <head><meta charset="utf-8" />
 
-<title>6_DataLoading</title>
+<title>5.1_Pandas_Data_Structures</title>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
@@ -13077,22 +13077,8 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Data-Loading,-Storage,-and-File-Formats">Data Loading, Storage, and File Formats<a class="anchor-link" href="#Data-Loading,-Storage,-and-File-Formats">&#182;</a></h1><p>functions for reading tabular data into a dataframe 
-.<br>
-.<br>
-read_csv -- Load data from a file, URL, or file-like object; use comma as default delimiter<br>
-read_fwf -- Read data in fixed-width column format<br>
-read_clipboard -- Version of read_csv that reads data from the clipboard; useful for converiting tables from web pages<br>
-read_excel -- read tabular data from an XLS or XLSX file<br>
-read_hdf -- Read HDF5 files written by pandas<br>
-read_html -- Read all tables found in the given HTML documnet<br>
-read_json -- Read data from a JSON string representation<br>
-read_msgpack -- Read pandas data encoded using the MessagePack binary format<br>
-read_pickle -- Read an arbitrary object stored in Python pickle format<br>
-read_sas -- Read a SAS dataset stored in one of the SAS system's custom storage Formats<br>
-read_sql -- Read the results of a SQL query as a pandas DataFrame<br>
-read_stata -- Read a dataset from stata file format<br>
-read_feather -- Read the Feather binary file format</p>
+<h1 id="5.1-Introduction-to-pandas-Data-Structures">5.1 Introduction to pandas Data Structures<a class="anchor-link" href="#5.1-Introduction-to-pandas-Data-Structures">&#182;</a></h1><p>Pandas has two main data structures. Series and DataFrame.</p>
+<h2 id="Series">Series<a class="anchor-link" href="#Series">&#182;</a></h2><p>A one dimensional array like object containing a sequency of types. similar to NumPy types.</p>
 
 </div>
 </div>
@@ -13103,8 +13089,9 @@ read_feather -- Read the Feather binary file format</p>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;exampledata/ex1.csv&#39;</span><span class="p">)</span>
-<span class="n">df</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="n">obj</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span>
+<span class="n">obj</span>
 </pre></div>
 
     </div>
@@ -13121,60 +13108,13 @@ read_feather -- Read the Feather binary file format</p>
 
 
 
-<div class="output_html rendered_html output_subarea output_execute_result">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>a</th>
-      <th>b</th>
-      <th>c</th>
-      <th>d</th>
-      <th>message</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>1</td>
-      <td>2</td>
-      <td>3</td>
-      <td>4</td>
-      <td>hello</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>5</td>
-      <td>6</td>
-      <td>7</td>
-      <td>8</td>
-      <td>world</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>9</td>
-      <td>10</td>
-      <td>11</td>
-      <td>12</td>
-      <td>foo</td>
-    </tr>
-  </tbody>
-</table>
-</div>
+<div class="output_text output_subarea output_execute_result">
+<pre>0    4
+1    7
+2   -5
+3    3
+dtype: int64</pre>
 </div>
 
 </div>
@@ -13186,7 +13126,7 @@ read_feather -- Read the Feather binary file format</p>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>A file will not always have a header row. You can load a dataframe without a header</p>
+<p>The left side shows the index as one was not specified. You can specify your own index.</p>
 
 </div>
 </div>
@@ -13196,8 +13136,8 @@ read_feather -- Read the Feather binary file format</p>
 <div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;exampledata/ex1.csv&#39;</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
-<span class="n">df</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">obj2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">])</span>
+<span class="n">obj2</span>
 </pre></div>
 
     </div>
@@ -13214,68 +13154,13 @@ read_feather -- Read the Feather binary file format</p>
 
 
 
-<div class="output_html rendered_html output_subarea output_execute_result">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>0</th>
-      <th>1</th>
-      <th>2</th>
-      <th>3</th>
-      <th>4</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>a</td>
-      <td>b</td>
-      <td>c</td>
-      <td>d</td>
-      <td>message</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>1</td>
-      <td>2</td>
-      <td>3</td>
-      <td>4</td>
-      <td>hello</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>5</td>
-      <td>6</td>
-      <td>7</td>
-      <td>8</td>
-      <td>world</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>9</td>
-      <td>10</td>
-      <td>11</td>
-      <td>12</td>
-      <td>foo</td>
-    </tr>
-  </tbody>
-</table>
-</div>
+<div class="output_text output_subarea output_execute_result">
+<pre>d    4
+b    7
+a   -5
+c    3
+dtype: int64</pre>
 </div>
 
 </div>
@@ -13283,22 +13168,13 @@ read_feather -- Read the Feather binary file format</p>
 </div>
 </div>
 
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>to specify the header yourself you can use the following code</p>
-
-</div>
-</div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[4]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;exampledata/ex1.csv&#39;</span><span class="p">,</span> <span class="n">names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="s1">&#39;message&#39;</span><span class="p">])</span>
-<span class="n">df2</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">obj2</span><span class="o">.</span><span class="n">index</span> <span class="c1">#returns information on the Series</span>
 </pre></div>
 
     </div>
@@ -13315,68 +13191,9 @@ read_feather -- Read the Feather binary file format</p>
 
 
 
-<div class="output_html rendered_html output_subarea output_execute_result">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>a</th>
-      <th>b</th>
-      <th>c</th>
-      <th>d</th>
-      <th>message</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>a</td>
-      <td>b</td>
-      <td>c</td>
-      <td>d</td>
-      <td>message</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>1</td>
-      <td>2</td>
-      <td>3</td>
-      <td>4</td>
-      <td>hello</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>5</td>
-      <td>6</td>
-      <td>7</td>
-      <td>8</td>
-      <td>world</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>9</td>
-      <td>10</td>
-      <td>11</td>
-      <td>12</td>
-      <td>foo</td>
-    </tr>
-  </tbody>
-</table>
-</div>
+<div class="output_text output_subarea output_execute_result">
+<pre>Index([&#39;d&#39;, &#39;b&#39;, &#39;a&#39;, &#39;c&#39;], dtype=&#39;object&#39;)</pre>
 </div>
 
 </div>
@@ -13388,7 +13205,7 @@ read_feather -- Read the Feather binary file format</p>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Suppose you wanted a column to be the index.</p>
+<p>Compared to Numpy arrays you can use labels in the index when selecting single or a set of values</p>
 
 </div>
 </div>
@@ -13398,8 +13215,7 @@ read_feather -- Read the Feather binary file format</p>
 <div class="prompt input_prompt">In&nbsp;[5]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;exampledata/ex1.csv&#39;</span><span class="p">,</span> <span class="n">index_col</span><span class="o">=</span><span class="s1">&#39;message&#39;</span><span class="p">)</span>
-<span class="n">df</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">obj2</span><span class="p">[[</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">]]</span>
 </pre></div>
 
     </div>
@@ -13416,63 +13232,12 @@ read_feather -- Read the Feather binary file format</p>
 
 
 
-<div class="output_html rendered_html output_subarea output_execute_result">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>a</th>
-      <th>b</th>
-      <th>c</th>
-      <th>d</th>
-    </tr>
-    <tr>
-      <th>message</th>
-      <th></th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>hello</th>
-      <td>1</td>
-      <td>2</td>
-      <td>3</td>
-      <td>4</td>
-    </tr>
-    <tr>
-      <th>world</th>
-      <td>5</td>
-      <td>6</td>
-      <td>7</td>
-      <td>8</td>
-    </tr>
-    <tr>
-      <th>foo</th>
-      <td>9</td>
-      <td>10</td>
-      <td>11</td>
-      <td>12</td>
-    </tr>
-  </tbody>
-</table>
-</div>
+<div class="output_text output_subarea output_execute_result">
+<pre>c    3
+a   -5
+d    4
+dtype: int64</pre>
 </div>
 
 </div>
@@ -13483,10 +13248,10 @@ read_feather -- Read the Feather binary file format</p>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[32]:</div>
+<div class="prompt input_prompt">In&nbsp;[6]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span> 
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">obj2</span><span class="p">[</span><span class="n">obj2</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">]</span>
 </pre></div>
 
     </div>
@@ -13499,17 +13264,16 @@ read_feather -- Read the Feather binary file format</p>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[32]:</div>
+    <div class="prompt output_prompt">Out[6]:</div>
 
 
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>message
-hello     2
-world     6
-foo      10
-Name: b, dtype: int64</pre>
+<pre>d    4
+b    7
+c    3
+dtype: int64</pre>
 </div>
 
 </div>
@@ -13517,60 +13281,13 @@ Name: b, dtype: int64</pre>
 </div>
 </div>
 
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>should your data file represent missing cells in a certain way e.g. Na, missing, Nan you can specify this to pandas and it<br>
-will replace it with its own missing format.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[6]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">result</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;exampledata/ex1.csv&#39;</span><span class="p">,</span> <span class="n">na_values</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Null&#39;</span><span class="p">])</span> <span class="c1">#pandas will replace the missing value with its own sentinel NaN</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Some-Read-CSV-functions">Some Read CSV functions<a class="anchor-link" href="#Some-Read-CSV-functions">&#182;</a></h2><p>path -- String indicating filesystem location, URL, or file-like object<br>
-sep or delimiter -- Character sequence or regular expression to use to split fields in each row<br>
-header -- Row number to use as column names; defaults to 0 (frist row), but should be None if there is no header row 
-index_col -- Column number or names to use as the row index in the result; can be a single name/nmber or a list of them for a hierachical index<br>
-names -- List of column names for result, combine with header=None
-skiprows -- Number of rows at beginning of file to ignore or list of row numbers to skip. 
-na_values -- Sequence of values to replace with na_valuescomment -- Characters to split comments of the end of lines. 
-parse_dates -- Attempt to parse data to datetime; False by default. If True, will attempt to parse all columns, Otherwise can specify a list of column numbers or name to parse. If<br>
-               element of list is tuple or list, will combine multiple columns together and parse to date 
-dayfirst -- When parsing potentially ambiguous dates, treat as international format, False by default<br>
-nrows -- Number of rows to read from beginning of file
-iterator -- Return a TextParser object for reading file piecemeal<br>
-chinksize -- for iteration, size of file chunks<br>
-skip_footer -- number of lines to ignore at end of file<br>
-.<br>
-.<br>
-.<br>
-.</p>
-<h1 id="Reading-Text-Files-in-Pieces">Reading Text Files in Pieces<a class="anchor-link" href="#Reading-Text-Files-in-Pieces">&#182;</a></h1>
-</div>
-</div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;exampledata/homes.csv&#39;</span><span class="p">,</span> <span class="n">nrows</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span> <span class="c1">#reads just 5 rows </span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">obj2</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -13587,100 +13304,13 @@ skip_footer -- number of lines to ignore at end of file<br>
 
 
 
-<div class="output_html rendered_html output_subarea output_execute_result">
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>Sell</th>
-      <th>"List"</th>
-      <th>"Living"</th>
-      <th>"Rooms"</th>
-      <th>"Beds"</th>
-      <th>"Baths"</th>
-      <th>"Age"</th>
-      <th>"Acres"</th>
-      <th>"Taxes"</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>142</td>
-      <td>160</td>
-      <td>28</td>
-      <td>10</td>
-      <td>5</td>
-      <td>3</td>
-      <td>60</td>
-      <td>0.28</td>
-      <td>3167</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>175</td>
-      <td>180</td>
-      <td>18</td>
-      <td>8</td>
-      <td>4</td>
-      <td>1</td>
-      <td>12</td>
-      <td>0.43</td>
-      <td>4033</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>129</td>
-      <td>132</td>
-      <td>13</td>
-      <td>6</td>
-      <td>3</td>
-      <td>1</td>
-      <td>41</td>
-      <td>0.33</td>
-      <td>1471</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>138</td>
-      <td>140</td>
-      <td>17</td>
-      <td>7</td>
-      <td>3</td>
-      <td>1</td>
-      <td>22</td>
-      <td>0.46</td>
-      <td>3204</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>232</td>
-      <td>240</td>
-      <td>25</td>
-      <td>8</td>
-      <td>4</td>
-      <td>3</td>
-      <td>5</td>
-      <td>2.05</td>
-      <td>3613</td>
-    </tr>
-  </tbody>
-</table>
-</div>
+<div class="output_text output_subarea output_execute_result">
+<pre>d      54.598150
+b    1096.633158
+a       0.006738
+c      20.085537
+dtype: float64</pre>
 </div>
 
 </div>
@@ -13688,15 +13318,22 @@ skip_footer -- number of lines to ignore at end of file<br>
 </div>
 </div>
 
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>a way to think aobut a Series is a fixed-length, ordered dict, as it is a mapping of the index values to data. It can be used in 
+many contexts where you may use a dict</p>
+
+</div>
+</div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[8]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># to read in a number of chunks </span>
-<span class="n">chunker</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;exampledata/homes.csv&#39;</span><span class="p">,</span> <span class="n">chunksize</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span> <span class="c1"># Specifies the number of rows per chunk</span>
-<span class="n">chunker</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="s1">&#39;b&#39;</span> <span class="ow">in</span> <span class="n">obj2</span>
 </pre></div>
 
     </div>
@@ -13715,7 +13352,7 @@ skip_footer -- number of lines to ignore at end of file<br>
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>&lt;pandas.io.parsers.TextFileReader at 0x2707a6f2700&gt;</pre>
+<pre>True</pre>
 </div>
 
 </div>
@@ -13723,19 +13360,23 @@ skip_footer -- number of lines to ignore at end of file<br>
 </div>
 </div>
 
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>should you have a dict of data you can create a series with the folowing code</p>
+
+</div>
+</div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[9]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tot</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([])</span>
-<span class="k">for</span> <span class="n">piece</span> <span class="ow">in</span> <span class="n">chunker</span><span class="p">:</span>
-    <span class="c1">#print(&#39;Piece value counts: \n&#39;, piece[&#39;Sell&#39;].value_counts())</span>
-    <span class="n">tot</span> <span class="o">=</span> <span class="n">tot</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">piece</span><span class="p">[</span><span class="s1">&#39;Sell&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(),</span> <span class="n">fill_value</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="c1">#.value counts returns a count of unique values. fill_value specifies what value to give missing data.</span>
-
-<span class="n">tot</span> <span class="o">=</span> <span class="n">tot</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="n">tot</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">sdata</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;Ohio&#39;</span><span class="p">:</span><span class="mi">35000</span><span class="p">,</span> <span class="s1">&#39;Texas&#39;</span><span class="p">:</span><span class="mi">7100</span><span class="p">,</span> <span class="s1">&#39;Oregon&#39;</span><span class="p">:</span><span class="mi">16000</span><span class="p">,</span> <span class="s1">&#39;Utah&#39;</span><span class="p">:</span><span class="mi">5000</span><span class="p">}</span>
+<span class="n">obj4</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">sdata</span><span class="p">)</span>
+<span class="n">obj4</span>
 </pre></div>
 
     </div>
@@ -13754,48 +13395,57 @@ skip_footer -- number of lines to ignore at end of file<br>
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>152    2.0
-129    2.0
-157    2.0
-175    2.0
-180    2.0
-135    2.0
-110    2.0
-148    2.0
-123    1.0
-127    1.0
-128    1.0
-111    1.0
-133    1.0
-150    1.0
-136    1.0
-106    1.0
-138    1.0
-142    1.0
-143    1.0
-145    1.0
-89     1.0
-146    1.0
-567    1.0
-151    1.0
-190    1.0
-271    1.0
-265    1.0
-247    1.0
-234    1.0
-232    1.0
-212    1.0
-207    1.0
-185    1.0
-293    1.0
-184    1.0
-183    1.0
-170    1.0
-167    1.0
-166    1.0
-165    1.0
-153    1.0
-87     1.0
+<pre>Ohio      35000
+Texas      7100
+Oregon    16000
+Utah       5000
+dtype: int64</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Should you want them in a particular order you can pass a list of index's</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[10]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">states</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;California&#39;</span><span class="p">,</span> <span class="s1">&#39;Ohio&#39;</span><span class="p">,</span> <span class="s1">&#39;Oregon&#39;</span><span class="p">,</span> <span class="s1">&#39;Texas&#39;</span><span class="p">]</span>
+<span class="n">obj4</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">sdata</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">states</span><span class="p">)</span>
+<span class="n">obj4</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[10]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>California        NaN
+Ohio          35000.0
+Oregon        16000.0
+Texas          7100.0
 dtype: float64</pre>
 </div>
 
@@ -13808,105 +13458,17 @@ dtype: float64</pre>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Writing-data-to-Text-Format">Writing data to Text Format<a class="anchor-link" href="#Writing-data-to-Text-Format">&#182;</a></h1>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[10]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;exampledata/homes.csv&#39;</span><span class="p">)</span>
-<span class="n">data</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;exampledata/ouput.csv&#39;</span><span class="p">)</span>
-
-<span class="c1">#To use other delimeter formats</span>
-<span class="kn">import</span> <span class="nn">sys</span> 
-<span class="n">data</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">,</span>  <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;|&#39;</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>|Sell|&#34; &#34;&#34;List&#34;&#34;&#34;|&#34; &#34;&#34;Living&#34;&#34;&#34;|&#34; &#34;&#34;Rooms&#34;&#34;&#34;|&#34; &#34;&#34;Beds&#34;&#34;&#34;|&#34; &#34;&#34;Baths&#34;&#34;&#34;|&#34; &#34;&#34;Age&#34;&#34;&#34;|&#34; &#34;&#34;Acres&#34;&#34;&#34;|&#34; &#34;&#34;Taxes&#34;&#34;&#34;
-0|142|160|28|10|5|3|60|0.28|3167
-1|175|180|18|8|4|1|12|0.43|4033
-2|129|132|13|6|3|1|41|0.33|1471
-3|138|140|17|7|3|1|22|0.46|3204
-4|232|240|25|8|4|3|5|2.05|3613
-5|135|140|18|7|4|3|9|0.57|3028
-6|150|160|20|8|4|3|18|4.0|3131
-7|207|225|22|8|4|2|16|2.22|5158
-8|271|285|30|10|5|2|30|0.53|5702
-9|89|90|10|5|3|1|43|0.3|2054
-10|153|157|22|8|3|3|18|0.38|4127
-11|87|90|16|7|3|1|50|0.65|1445
-12|234|238|25|8|4|2|2|1.61|2087
-13|106|116|20|8|4|1|13|0.22|2818
-14|175|180|22|8|4|2|15|2.06|3917
-15|165|170|17|8|4|2|33|0.46|2220
-16|166|170|23|9|4|2|37|0.27|3498
-17|136|140|19|7|3|1|22|0.63|3607
-18|148|160|17|7|3|2|13|0.36|3648
-19|151|153|19|8|4|2|24|0.34|3561
-20|180|190|24|9|4|2|10|1.55|4681
-21|293|305|26|8|4|3|6|0.46|7088
-22|167|170|20|9|4|2|46|0.46|3482
-23|190|193|22|9|5|2|37|0.48|3920
-24|184|190|21|9|5|2|27|1.3|4162
-25|157|165|20|8|4|2|7|0.3|3785
-26|110|115|16|8|4|1|26|0.29|3103
-27|135|145|18|7|4|1|35|0.43|3363
-28|567|625|64|11|4|4|4|0.85|12192
-29|180|185|20|8|4|2|11|1.0|3831
-30|183|188|17|7|3|2|16|3.0|3564
-31|185|193|20|9|3|2|56|6.49|3765
-32|152|155|17|8|4|1|33|0.7|3361
-33|148|153|13|6|3|2|22|0.39|3950
-34|152|159|15|7|3|1|25|0.59|3055
-35|146|150|16|7|3|1|31|0.36|2950
-36|170|190|24|10|3|2|33|0.57|3346
-37|127|130|20|8|4|1|65|0.4|3334
-38|265|270|36|10|6|3|33|1.2|5853
-39|157|163|18|8|4|2|12|1.13|3982
-40|128|135|17|9|4|1|25|0.52|3374
-41|110|120|15|8|4|2|11|0.59|3119
-42|123|130|18|8|4|2|43|0.39|3268
-43|212|230|39|12|5|3|202|4.29|3648
-44|145|145|18|8|4|2|44|0.22|2783
-45|129|135|10|6|3|1|15|1.0|2438
-46|143|145|21|7|4|2|10|1.2|3529
-47|247|252|29|9|4|2|4|1.25|4626
-48|111|120|15|8|3|1|97|1.11|3205
-49|133|145|26|7|3|1|42|0.36|3059
-</pre>
-</div>
-</div>
+<p>the .isnull and .notnull function should be used to detect missing data</p>
 
 </div>
 </div>
-
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[11]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">data</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="p">,</span> <span class="n">na_rep</span><span class="o">=</span><span class="s1">&#39;NULL&#39;</span><span class="p">)</span> <span class="c1"># will replace all empty values with &#39;NULL&#39;</span>
-<span class="c1"># with no other options specified the row and column labels will be written to the file </span>
-<span class="c1"># however you can disable them </span>
-<span class="n">data</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">&#39;exampledata/output.csv&#39;</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="c1">#this file has been saved with no index or header </span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">isnull</span><span class="p">(</span><span class="n">obj4</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -13919,83 +13481,31 @@ dtype: float64</pre>
 
 <div class="output_area">
 
-    <div class="prompt"></div>
+    <div class="prompt output_prompt">Out[11]:</div>
 
 
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>,Sell,&#34; &#34;&#34;List&#34;&#34;&#34;,&#34; &#34;&#34;Living&#34;&#34;&#34;,&#34; &#34;&#34;Rooms&#34;&#34;&#34;,&#34; &#34;&#34;Beds&#34;&#34;&#34;,&#34; &#34;&#34;Baths&#34;&#34;&#34;,&#34; &#34;&#34;Age&#34;&#34;&#34;,&#34; &#34;&#34;Acres&#34;&#34;&#34;,&#34; &#34;&#34;Taxes&#34;&#34;&#34;
-0,142,160,28,10,5,3,60,0.28,3167
-1,175,180,18,8,4,1,12,0.43,4033
-2,129,132,13,6,3,1,41,0.33,1471
-3,138,140,17,7,3,1,22,0.46,3204
-4,232,240,25,8,4,3,5,2.05,3613
-5,135,140,18,7,4,3,9,0.57,3028
-6,150,160,20,8,4,3,18,4.0,3131
-7,207,225,22,8,4,2,16,2.22,5158
-8,271,285,30,10,5,2,30,0.53,5702
-9,89,90,10,5,3,1,43,0.3,2054
-10,153,157,22,8,3,3,18,0.38,4127
-11,87,90,16,7,3,1,50,0.65,1445
-12,234,238,25,8,4,2,2,1.61,2087
-13,106,116,20,8,4,1,13,0.22,2818
-14,175,180,22,8,4,2,15,2.06,3917
-15,165,170,17,8,4,2,33,0.46,2220
-16,166,170,23,9,4,2,37,0.27,3498
-17,136,140,19,7,3,1,22,0.63,3607
-18,148,160,17,7,3,2,13,0.36,3648
-19,151,153,19,8,4,2,24,0.34,3561
-20,180,190,24,9,4,2,10,1.55,4681
-21,293,305,26,8,4,3,6,0.46,7088
-22,167,170,20,9,4,2,46,0.46,3482
-23,190,193,22,9,5,2,37,0.48,3920
-24,184,190,21,9,5,2,27,1.3,4162
-25,157,165,20,8,4,2,7,0.3,3785
-26,110,115,16,8,4,1,26,0.29,3103
-27,135,145,18,7,4,1,35,0.43,3363
-28,567,625,64,11,4,4,4,0.85,12192
-29,180,185,20,8,4,2,11,1.0,3831
-30,183,188,17,7,3,2,16,3.0,3564
-31,185,193,20,9,3,2,56,6.49,3765
-32,152,155,17,8,4,1,33,0.7,3361
-33,148,153,13,6,3,2,22,0.39,3950
-34,152,159,15,7,3,1,25,0.59,3055
-35,146,150,16,7,3,1,31,0.36,2950
-36,170,190,24,10,3,2,33,0.57,3346
-37,127,130,20,8,4,1,65,0.4,3334
-38,265,270,36,10,6,3,33,1.2,5853
-39,157,163,18,8,4,2,12,1.13,3982
-40,128,135,17,9,4,1,25,0.52,3374
-41,110,120,15,8,4,2,11,0.59,3119
-42,123,130,18,8,4,2,43,0.39,3268
-43,212,230,39,12,5,3,202,4.29,3648
-44,145,145,18,8,4,2,44,0.22,2783
-45,129,135,10,6,3,1,15,1.0,2438
-46,143,145,21,7,4,2,10,1.2,3529
-47,247,252,29,9,4,2,4,1.25,4626
-48,111,120,15,8,3,1,97,1.11,3205
-49,133,145,26,7,3,1,42,0.36,3059
-</pre>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>California     True
+Ohio          False
+Oregon        False
+Texas         False
+dtype: bool</pre>
 </div>
+
 </div>
 
 </div>
 </div>
 
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Working-With-Delimited-Formats">Working With Delimited Formats<a class="anchor-link" href="#Working-With-Delimited-Formats">&#182;</a></h2>
-</div>
-</div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[12]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">bad_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;exampledata/bad_csv.csv&#39;</span><span class="p">)</span>
-<span class="n">bad_data</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">notnull</span><span class="p">(</span><span class="n">obj4</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -14009,6 +13519,1783 @@ dtype: float64</pre>
 <div class="output_area">
 
     <div class="prompt output_prompt">Out[12]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>California    False
+Ohio           True
+Oregon         True
+Texas          True
+dtype: bool</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>A useful Series feature is that it automatically aligns by index label in arithmetic operations</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">obj4</span> <span class="o">+</span> <span class="n">obj4</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[13]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>California        NaN
+Ohio          70000.0
+Oregon        32000.0
+Texas         14200.0
+dtype: float64</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[14]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">obj4</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;population&#39;</span> <span class="c1"># gives the object a name </span>
+<span class="n">obj4</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;state&#39;</span> <span class="c1">#gives the index a name </span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>.<br>
+.<br>
+.<br>
+.<br>
+.<br>
+.<br>
+.<br>
+.</p>
+<h1 id="DataFrame">DataFrame<a class="anchor-link" href="#DataFrame">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[15]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;state&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;Ohio&#39;</span><span class="p">,</span> <span class="s1">&#39;Ohio&#39;</span><span class="p">,</span> <span class="s1">&#39;Ohio&#39;</span><span class="p">,</span> <span class="s1">&#39;Nevada&#39;</span><span class="p">,</span> <span class="s1">&#39;Nevada&#39;</span><span class="p">,</span> <span class="s1">&#39;Nevada&#39;</span><span class="p">],</span> <span class="s1">&#39;year&#39;</span><span class="p">:[</span><span class="mi">2000</span><span class="p">,</span><span class="mi">2001</span><span class="p">,</span><span class="mi">2002</span><span class="p">,</span><span class="mi">2001</span><span class="p">,</span><span class="mi">2002</span><span class="p">,</span><span class="mi">2003</span><span class="p">],</span> <span class="s1">&#39;pop&#39;</span><span class="p">:[</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.7</span><span class="p">,</span> <span class="mf">3.6</span><span class="p">,</span> <span class="mf">2.4</span><span class="p">,</span> <span class="mf">2.9</span><span class="p">,</span> <span class="mf">3.2</span><span class="p">]}</span>
+<span class="n">frame</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="n">frame</span><span class="o">.</span><span class="n">head</span><span class="p">()</span> <span class="c1">#shows the first 5 rows </span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[15]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>state</th>
+      <th>year</th>
+      <th>pop</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Ohio</td>
+      <td>2000</td>
+      <td>1.5</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Ohio</td>
+      <td>2001</td>
+      <td>1.7</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Ohio</td>
+      <td>2002</td>
+      <td>3.6</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Nevada</td>
+      <td>2001</td>
+      <td>2.4</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Nevada</td>
+      <td>2002</td>
+      <td>2.9</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>if you specify a sequence of columns, the dataframes columns will be arranged in that order.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[16]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;year&#39;</span><span class="p">,</span> <span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;pop&#39;</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[16]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>year</th>
+      <th>state</th>
+      <th>pop</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2000</td>
+      <td>Ohio</td>
+      <td>1.5</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2001</td>
+      <td>Ohio</td>
+      <td>1.7</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2002</td>
+      <td>Ohio</td>
+      <td>3.6</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2001</td>
+      <td>Nevada</td>
+      <td>2.4</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2002</td>
+      <td>Nevada</td>
+      <td>2.9</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>2003</td>
+      <td>Nevada</td>
+      <td>3.2</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="selecting-data-from-the-DataFrame">selecting data from the DataFrame<a class="anchor-link" href="#selecting-data-from-the-DataFrame">&#182;</a></h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[17]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">frame2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span> <span class="p">[</span><span class="s1">&#39;year&#39;</span><span class="p">,</span> <span class="s1">&#39;state&#39;</span><span class="p">,</span> <span class="s1">&#39;pop&#39;</span><span class="p">,</span> <span class="s1">&#39;debt&#39;</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;one&#39;</span><span class="p">,</span> <span class="s1">&#39;two&#39;</span><span class="p">,</span> <span class="s1">&#39;three&#39;</span><span class="p">,</span> <span class="s1">&#39;four&#39;</span><span class="p">,</span> <span class="s1">&#39;five&#39;</span><span class="p">,</span> <span class="s1">&#39;six&#39;</span><span class="p">])</span>
+<span class="n">frame2</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[17]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>year</th>
+      <th>state</th>
+      <th>pop</th>
+      <th>debt</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>one</th>
+      <td>2000</td>
+      <td>Ohio</td>
+      <td>1.5</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>two</th>
+      <td>2001</td>
+      <td>Ohio</td>
+      <td>1.7</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>three</th>
+      <td>2002</td>
+      <td>Ohio</td>
+      <td>3.6</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>four</th>
+      <td>2001</td>
+      <td>Nevada</td>
+      <td>2.4</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>five</th>
+      <td>2002</td>
+      <td>Nevada</td>
+      <td>2.9</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[18]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">frame</span><span class="p">[</span><span class="s1">&#39;state&#39;</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[18]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>0      Ohio
+1      Ohio
+2      Ohio
+3    Nevada
+4    Nevada
+5    Nevada
+Name: state, dtype: object</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[19]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">frame</span><span class="o">.</span><span class="n">year</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[19]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>0    2000
+1    2001
+2    2002
+3    2001
+4    2002
+5    2003
+Name: year, dtype: int64</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[20]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">frame</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="c1">#gets row 1 </span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[20]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>state    Ohio
+year     2001
+pop       1.7
+Name: 1, dtype: object</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>to assign data to an empy column</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[21]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">frame2</span><span class="p">[</span><span class="s1">&#39;debt&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+<span class="n">frame2</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[21]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>year</th>
+      <th>state</th>
+      <th>pop</th>
+      <th>debt</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>one</th>
+      <td>2000</td>
+      <td>Ohio</td>
+      <td>1.5</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>two</th>
+      <td>2001</td>
+      <td>Ohio</td>
+      <td>1.7</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>three</th>
+      <td>2002</td>
+      <td>Ohio</td>
+      <td>3.6</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>four</th>
+      <td>2001</td>
+      <td>Nevada</td>
+      <td>2.4</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>five</th>
+      <td>2002</td>
+      <td>Nevada</td>
+      <td>2.9</td>
+      <td>4</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[22]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">del</span> <span class="n">frame2</span><span class="p">[</span><span class="s1">&#39;debt&#39;</span><span class="p">]</span> 
+<span class="n">frame2</span><span class="o">.</span><span class="n">head</span><span class="p">()</span> <span class="c1">#deletes column </span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[22]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>year</th>
+      <th>state</th>
+      <th>pop</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>one</th>
+      <td>2000</td>
+      <td>Ohio</td>
+      <td>1.5</td>
+    </tr>
+    <tr>
+      <th>two</th>
+      <td>2001</td>
+      <td>Ohio</td>
+      <td>1.7</td>
+    </tr>
+    <tr>
+      <th>three</th>
+      <td>2002</td>
+      <td>Ohio</td>
+      <td>3.6</td>
+    </tr>
+    <tr>
+      <th>four</th>
+      <td>2001</td>
+      <td>Nevada</td>
+      <td>2.4</td>
+    </tr>
+    <tr>
+      <th>five</th>
+      <td>2002</td>
+      <td>Nevada</td>
+      <td>2.9</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Arithmetic-and-data-Alignment">Arithmetic and data Alignment<a class="anchor-link" href="#Arithmetic-and-data-Alignment">&#182;</a></h2><p>when you add objects together, if index pairs are not the same, the respective index in the result will be the union of the index pairs.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[23]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">s1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mf">7.3</span><span class="p">,</span> <span class="o">-</span><span class="mf">2.5</span><span class="p">,</span> <span class="mf">3.4</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">,],</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">])</span>
+<span class="n">s2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mf">1.3</span><span class="p">,</span> <span class="o">-</span><span class="mf">5.0</span><span class="p">,</span> <span class="mf">2.2</span><span class="p">,</span> <span class="mf">7.4</span><span class="p">,</span> <span class="mf">7.7</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="s1">&#39;e&#39;</span><span class="p">,</span> <span class="s1">&#39;f&#39;</span><span class="p">,</span> <span class="s1">&#39;g&#39;</span><span class="p">])</span>
+<span class="n">s1</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[23]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>a    7.3
+b   -2.5
+c    3.4
+d    1.5
+dtype: float64</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[24]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">s2</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[24]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>c    1.3
+d   -5.0
+e    2.2
+f    7.4
+g    7.7
+dtype: float64</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[25]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">s1</span> <span class="o">+</span> <span class="n">s2</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[25]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>a    NaN
+b    NaN
+c    4.7
+d   -3.5
+e    NaN
+f    NaN
+g    NaN
+dtype: float64</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>if the cell does not exist in one of the two Series of df objects you are adding. The result will be NaN
+.<br>
+.</p>
+<h2 id="Operations-between-DataFrame-and-Series">Operations between DataFrame and Series<a class="anchor-link" href="#Operations-between-DataFrame-and-Series">&#182;</a></h2><p>Broadcasting. Subtracting a subdimension or row from a series/data frame will subtract the result from all dimensions/rows</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[26]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">12.</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">arr</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[26]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>array([[ 0.,  1.,  2.,  3.],
+       [ 4.,  5.,  6.,  7.],
+       [ 8.,  9., 10., 11.]])</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[27]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">arr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[27]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>array([0., 1., 2., 3.])</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[28]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">arr</span> <span class="o">-</span> <span class="n">arr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[28]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>array([[0., 0., 0., 0.],
+       [4., 4., 4., 4.],
+       [8., 8., 8., 8.]])</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[29]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># now for the DataFrame</span>
+<span class="n">frame</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">12.</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">)),</span> <span class="n">columns</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="s1">&#39;bde&#39;</span><span class="p">),</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Utah&#39;</span><span class="p">,</span> <span class="s1">&#39;Ohio&#39;</span><span class="p">,</span> <span class="s1">&#39;Texas&#39;</span><span class="p">,</span> <span class="s1">&#39;Oregon&#39;</span><span class="p">])</span>
+<span class="n">series</span> <span class="o">=</span> <span class="n">frame</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[30]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">frame</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[30]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>b</th>
+      <th>d</th>
+      <th>e</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Utah</th>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>2.0</td>
+    </tr>
+    <tr>
+      <th>Ohio</th>
+      <td>3.0</td>
+      <td>4.0</td>
+      <td>5.0</td>
+    </tr>
+    <tr>
+      <th>Texas</th>
+      <td>6.0</td>
+      <td>7.0</td>
+      <td>8.0</td>
+    </tr>
+    <tr>
+      <th>Oregon</th>
+      <td>9.0</td>
+      <td>10.0</td>
+      <td>11.0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[31]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">series</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[31]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>b    0.0
+d    1.0
+e    2.0
+Name: Utah, dtype: float64</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[32]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">frame</span> <span class="o">-</span> <span class="n">series</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[32]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>b</th>
+      <th>d</th>
+      <th>e</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Utah</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>Ohio</th>
+      <td>3.0</td>
+      <td>3.0</td>
+      <td>3.0</td>
+    </tr>
+    <tr>
+      <th>Texas</th>
+      <td>6.0</td>
+      <td>6.0</td>
+      <td>6.0</td>
+    </tr>
+    <tr>
+      <th>Oregon</th>
+      <td>9.0</td>
+      <td>9.0</td>
+      <td>9.0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Function-Application-and-Mapping">Function Application and Mapping<a class="anchor-link" href="#Function-Application-and-Mapping">&#182;</a></h2><p>numpy ufuncs are also applicable to DataBase objects</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[33]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">frame</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="n">columns</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="s1">&#39;bde&#39;</span><span class="p">),</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;East Sussex&#39;</span><span class="p">,</span> <span class="s1">&#39;Hampshire&#39;</span><span class="p">,</span> <span class="s1">&#39;Kent&#39;</span><span class="p">,</span> <span class="s1">&#39;Shropshire&#39;</span><span class="p">])</span>
+<span class="n">frame</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[33]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>b</th>
+      <th>d</th>
+      <th>e</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>East Sussex</th>
+      <td>1.223321</td>
+      <td>-0.932108</td>
+      <td>0.281089</td>
+    </tr>
+    <tr>
+      <th>Hampshire</th>
+      <td>-0.767113</td>
+      <td>0.349402</td>
+      <td>0.952245</td>
+    </tr>
+    <tr>
+      <th>Kent</th>
+      <td>-1.714094</td>
+      <td>-0.037945</td>
+      <td>0.477059</td>
+    </tr>
+    <tr>
+      <th>Shropshire</th>
+      <td>-1.643877</td>
+      <td>1.008616</td>
+      <td>-0.727541</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[34]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">frame</span><span class="o">.</span><span class="n">abs</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[34]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>b</th>
+      <th>d</th>
+      <th>e</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>East Sussex</th>
+      <td>1.223321</td>
+      <td>0.932108</td>
+      <td>0.281089</td>
+    </tr>
+    <tr>
+      <th>Hampshire</th>
+      <td>0.767113</td>
+      <td>0.349402</td>
+      <td>0.952245</td>
+    </tr>
+    <tr>
+      <th>Kent</th>
+      <td>1.714094</td>
+      <td>0.037945</td>
+      <td>0.477059</td>
+    </tr>
+    <tr>
+      <th>Shropshire</th>
+      <td>1.643877</td>
+      <td>1.008616</td>
+      <td>0.727541</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[35]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">-</span> <span class="n">x</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+<span class="n">frame</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">f</span><span class="p">)</span> <span class="c1">#finds the maximum difference between the values in columns</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[35]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>b    2.937415
+d    1.940724
+e    1.679785
+dtype: float64</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[36]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#should you want the function to be applied to rows instead. </span>
+<span class="n">frame</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;columns&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[36]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>East Sussex    2.155429
+Hampshire      1.719357
+Kent           2.191153
+Shropshire     2.652493
+dtype: float64</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[37]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">mean</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">frame</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">mean</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="s1">&#39;columns&#39;</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[37]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>East Sussex    0.190767
+Hampshire      0.178178
+Kent          -0.424993
+Shropshire    -0.454267
+dtype: float64</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Element-wise Python functions can be used too. you can do this with applymap()</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[38]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">form</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s1">&#39;</span><span class="si">%.2f</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="n">x</span>
+<span class="n">frame</span><span class="o">.</span><span class="n">applymap</span><span class="p">(</span><span class="n">form</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[38]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>b</th>
+      <th>d</th>
+      <th>e</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>East Sussex</th>
+      <td>1.22</td>
+      <td>-0.93</td>
+      <td>0.28</td>
+    </tr>
+    <tr>
+      <th>Hampshire</th>
+      <td>-0.77</td>
+      <td>0.35</td>
+      <td>0.95</td>
+    </tr>
+    <tr>
+      <th>Kent</th>
+      <td>-1.71</td>
+      <td>-0.04</td>
+      <td>0.48</td>
+    </tr>
+    <tr>
+      <th>Shropshire</th>
+      <td>-1.64</td>
+      <td>1.01</td>
+      <td>-0.73</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>.<br>
+.<br>
+.<br>
+.</p>
+<h1 id="Sorting-and-Ranking">Sorting and Ranking<a class="anchor-link" href="#Sorting-and-Ranking">&#182;</a></h1><p>Sorting a dataset by some criterion is another built-in operation.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[39]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">obj</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span> <span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">])</span>
+<span class="n">obj</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[39]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>b    0
+d    1
+a    2
+c    3
+dtype: int64</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[40]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">obj</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[40]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>a    2
+b    0
+c    3
+d    1
+dtype: int64</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[41]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">frame2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">8</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">)),</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;three&#39;</span><span class="p">,</span> <span class="s1">&#39;one&#39;</span><span class="p">],</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">])</span>
+<span class="n">frame2</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[41]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>d</th>
+      <th>a</th>
+      <th>b</th>
+      <th>c</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>three</th>
+      <td>0</td>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>one</th>
+      <td>4</td>
+      <td>5</td>
+      <td>6</td>
+      <td>7</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[42]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">frame2</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span> <span class="c1">#sorts rows</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[42]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>d</th>
+      <th>a</th>
+      <th>b</th>
+      <th>c</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>one</th>
+      <td>4</td>
+      <td>5</td>
+      <td>6</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>three</th>
+      <td>0</td>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[43]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">frame2</span><span class="o">.</span><span class="n">sort_index</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="c1">#sorts columns</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[43]:</div>
 
 
 
@@ -14034,20 +15321,23 @@ dtype: float64</pre>
       <th>a</th>
       <th>b</th>
       <th>c</th>
+      <th>d</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>0</th>
+      <th>three</th>
       <td>1</td>
       <td>2</td>
       <td>3</td>
+      <td>0</td>
     </tr>
     <tr>
-      <th>1</th>
-      <td>1</td>
-      <td>2</td>
-      <td>3</td>
+      <th>one</th>
+      <td>5</td>
+      <td>6</td>
+      <td>7</td>
+      <td>4</td>
     </tr>
   </tbody>
 </table>
@@ -14060,20 +15350,12 @@ dtype: float64</pre>
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>As you can see the elements are represented in double quote marks. This is more common than usual. in this case it may be necessary to manually read in the file using pythons built-in csv module.</p>
-
-</div>
-</div>
-</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[13]:</div>
+<div class="prompt input_prompt">In&nbsp;[44]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">!</span>cat exampledata/bad_csv.csv
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">frame2</span><span class="o">.</span><span class="n">sort_index</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="c1">#columns sorted in decending order </span>
 </pre></div>
 
     </div>
@@ -14086,299 +15368,7 @@ dtype: float64</pre>
 
 <div class="output_area">
 
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>&#34;a&#34;,&#34;b&#34;,&#34;c&#34;
-&#34;1&#34;,&#34;2&#34;,&#34;3&#34;
-&#34;1&#34;,&#34;2&#34;,&#34;3&#34;
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[14]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">csv</span>
-<span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;exampledata/bad_csv.csv&#39;</span><span class="p">)</span>
-<span class="n">reader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">reader</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
-
-<span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">reader</span><span class="p">:</span> 
-    <span class="nb">print</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>[&#39;a&#39;, &#39;b&#39;, &#39;c&#39;]
-[&#39;1&#39;, &#39;2&#39;, &#39;3&#39;]
-[&#39;1&#39;, &#39;2&#39;, &#39;3&#39;]
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>from here, it's up to you to do the wrangling.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[15]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;exampledata/bad_csv.csv&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span> 
-    <span class="n">lines</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">csv</span><span class="o">.</span><span class="n">reader</span><span class="p">(</span><span class="n">f</span><span class="p">))</span>
-
-<span class="n">header</span><span class="p">,</span> <span class="n">values</span> <span class="o">=</span> <span class="n">lines</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">lines</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span> <span class="c1">#lines 0 is the header. lines 1 and onwards are the values.</span>
-
-<span class="c1"># Now create a dictionary of data columns </span>
-<span class="c1"># *values collects all the positions in the tuple</span>
-<span class="c1"># zip joins a list all positional elements together in a tuple </span>
-
-<span class="n">data_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">h</span><span class="p">:</span> <span class="n">v</span> <span class="k">for</span> <span class="n">h</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">header</span><span class="p">,</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">values</span><span class="p">))}</span> 
-<span class="n">data_dict</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[15]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>{&#39;a&#39;: (&#39;1&#39;, &#39;1&#39;), &#39;b&#39;: (&#39;2&#39;, &#39;2&#39;), &#39;c&#39;: (&#39;3&#39;, &#39;3&#39;)}</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>csv files can come in many different forms you can specify your own by creating a class like the one below</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[16]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">my_dialect</span><span class="p">(</span><span class="n">csv</span><span class="o">.</span><span class="n">Dialect</span><span class="p">):</span>
-    <span class="n">lineterminator</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span>
-    <span class="n">delimiter</span> <span class="o">=</span> <span class="s1">&#39;;&#39;</span>
-    <span class="n">quotechar</span> <span class="o">=</span> <span class="s1">&#39;&quot;&#39;</span>
-    <span class="n">quoting</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">QUOTE_MINIMAL</span>
-<span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;exampledata/homes.csv&#39;</span><span class="p">)</span>
-<span class="n">reader</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">reader</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">delimiter</span><span class="o">=</span><span class="s1">&#39;|&#39;</span><span class="p">)</span>
-
-<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;exampledata/mydata.csv&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-    <span class="n">writer</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">dialect</span><span class="o">=</span><span class="n">my_dialect</span><span class="p">)</span>
-    <span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">((</span><span class="s1">&#39;hello&#39;</span><span class="p">,</span> <span class="s1">&#39;this&#39;</span><span class="p">,</span> <span class="s1">&#39;is&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;string&#39;</span><span class="p">))</span>
-    <span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">((</span><span class="s1">&#39;1&#39;</span><span class="p">,</span> <span class="s1">&#39;2&#39;</span><span class="p">,</span> <span class="s1">&#39;3&#39;</span><span class="p">,</span> <span class="s1">&#39;4&#39;</span><span class="p">))</span>
-    <span class="n">writer</span><span class="o">.</span><span class="n">writerow</span><span class="p">((</span><span class="s1">&#39;%&#39;</span><span class="p">,</span> <span class="s1">&#39;5&#39;</span><span class="p">,</span> <span class="s1">&#39;6&#39;</span><span class="p">,</span> <span class="s1">&#39;7&#39;</span><span class="p">))</span>
-
-<span class="o">!</span>cat <span class="s1">&#39;exampledata/mydata.csv&#39;</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt"></div>
-
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>hello;this;is;a;string
-1;2;3;4
-%;5;6;7
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="JSON-Data">JSON Data<a class="anchor-link" href="#JSON-Data">&#182;</a></h1><p>JSON JavaScript Object Notations has become the standard format for sending HTTPS requests. (asking for and receiving data from servers through the web) below is an example</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[17]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">obj</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">  {&quot;name&quot;: [&quot;Ollie&quot;, &quot;NaN&quot;],</span>
-<span class="s2">  &quot;places_lived&quot;: [&quot;battle&quot;, &quot;robertsbridge&quot;],</span>
-<span class="s2">  &quot;pet&quot;: [&quot;Mac&quot;, &quot;philip&quot;],</span>
-<span class="s2">  &quot;siblings&quot;:[&quot;thomas&quot;, &quot;Giles&quot;]</span>
-<span class="s2">  }&quot;&quot;&quot;</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>JSON is very similar to python code apart from some nuances. All keys must be strings. Null is represented by null.</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[18]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">json</span> 
-<span class="n">result</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">obj</span><span class="p">)</span> <span class="c1"># loads a JSON object into python</span>
-<span class="n">result</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[18]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>{&#39;name&#39;: [&#39;Ollie&#39;, &#39;NaN&#39;],
- &#39;places_lived&#39;: [&#39;battle&#39;, &#39;robertsbridge&#39;],
- &#39;pet&#39;: [&#39;Mac&#39;, &#39;philip&#39;],
- &#39;siblings&#39;: [&#39;thomas&#39;, &#39;Giles&#39;]}</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[19]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">asjson</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="c1">#converts to JSON</span>
-<span class="n">asjson</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[19]:</div>
-
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>&#39;{&#34;name&#34;: [&#34;Ollie&#34;, &#34;NaN&#34;], &#34;places_lived&#34;: [&#34;battle&#34;, &#34;robertsbridge&#34;], &#34;pet&#34;: [&#34;Mac&#34;, &#34;philip&#34;], &#34;siblings&#34;: [&#34;thomas&#34;, &#34;Giles&#34;]}&#39;</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>once you have received the JSON into data you can load it into a dataframe like any python dicts</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[20]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">result</span><span class="p">[</span><span class="s1">&#39;pet&#39;</span><span class="p">])</span>
-<span class="n">df</span><span class="p">[[</span><span class="s1">&#39;name&#39;</span><span class="p">,</span> <span class="s1">&#39;places_lived&#39;</span><span class="p">]]</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-
-<div class="output_area">
-
-    <div class="prompt output_prompt">Out[20]:</div>
+    <div class="prompt output_prompt">Out[44]:</div>
 
 
 
@@ -14401,20 +15391,186 @@ dtype: float64</pre>
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>name</th>
-      <th>places_lived</th>
+      <th>d</th>
+      <th>c</th>
+      <th>b</th>
+      <th>a</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>Mac</th>
-      <td>Ollie</td>
-      <td>battle</td>
+      <th>three</th>
+      <td>0</td>
+      <td>3</td>
+      <td>2</td>
+      <td>1</td>
     </tr>
     <tr>
-      <th>philip</th>
+      <th>one</th>
+      <td>4</td>
+      <td>7</td>
+      <td>6</td>
+      <td>5</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[45]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">frame2</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="c1">#sorts the row by b Descending </span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[45]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>d</th>
+      <th>a</th>
+      <th>b</th>
+      <th>c</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>one</th>
+      <td>4</td>
+      <td>5</td>
+      <td>6</td>
+      <td>7</td>
+    </tr>
+    <tr>
+      <th>three</th>
+      <td>0</td>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Summarizing-and-Computing-Descriptive-Statistics">Summarizing and Computing Descriptive Statistics<a class="anchor-link" href="#Summarizing-and-Computing-Descriptive-Statistics">&#182;</a></h1><p>pandas objects have built in tools for gathering summary statistics for a whole series or rows/columns of a dataframe. unlike numpy
+they have built-in handling for missing data.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[46]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([[</span><span class="mf">1.4</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">],</span> <span class="p">[</span><span class="mf">7.1</span><span class="p">,</span> <span class="o">-</span><span class="mf">4.5</span><span class="p">],</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">],</span> <span class="p">[</span><span class="mf">0.75</span><span class="p">,</span> <span class="o">-</span><span class="mf">1.3</span><span class="p">]],</span> <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">],</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;one&#39;</span><span class="p">,</span> <span class="s1">&#39;two&#39;</span><span class="p">])</span>
+<span class="n">df</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[46]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>one</th>
+      <th>two</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>a</th>
+      <td>1.40</td>
       <td>NaN</td>
-      <td>robertsbridge</td>
+    </tr>
+    <tr>
+      <th>b</th>
+      <td>7.10</td>
+      <td>-4.5</td>
+    </tr>
+    <tr>
+      <th>c</th>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>d</th>
+      <td>0.75</td>
+      <td>-1.3</td>
     </tr>
   </tbody>
 </table>
@@ -14427,21 +15583,12 @@ dtype: float64</pre>
 </div>
 
 </div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="XML-and-HTML:-Web-Scraping">XML and HTML: Web Scraping<a class="anchor-link" href="#XML-and-HTML:-Web-Scraping">&#182;</a></h1><p>pandas has a built-in function, read_html which uses a few different methods to read tables out of HTML files as a DataFrame. you must have 'lxml' and 'beautifulsoup4 html5lib' installed. You can use pip to install them</p>
-
-</div>
-</div>
-</div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[24]:</div>
+<div class="prompt input_prompt">In&nbsp;[47]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">tables</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_html</span><span class="p">(</span><span class="s1">&#39;exampledata/test_webpage.html&#39;</span><span class="p">)</span>
-<span class="n">tables</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -14454,52 +15601,15 @@ dtype: float64</pre>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[24]:</div>
+    <div class="prompt output_prompt">Out[47]:</div>
 
 
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>[  First name    Last name  Age
- 0       Tinu     Elejogun   14
- 1  Blaszczyk  Kostrzewski   25
- 2       Lily    McGarrett   18
- 3  Olatunkbo     Chijiaku   22
- 4   Adrienne     Anthoula   22
- 5     Axelia   Athanasios   22
- 6  Jon-Kabat         Zinn   22
- 7    Thabang        Mosoa   15
- 8   Kgaogelo        Mosoa   11,
-    ×  1  2  3
- 0  1  1  2  3
- 1  2  2  4  6
- 2  3  3  6  9,
-                          0             1  \
- 0  Standard Representation           NaN   
- 1                    2 3 1           NaN   
- 2              Health Risk  Flammability   
- 3                  Level 3       Level 2   
- 
-                                                    2        3  
- 0                             Tabular Representation      NaN  
- 1  Risk levels of hazardous materials in this fac...      NaN  
- 2                                         Reactivity  Special  
- 3                                            Level 1      NaN  ,
-   Health Risk Flammability Reactivity  Special
- 0     Level 3      Level 2    Level 1      NaN,
-     0                                                  1
- 0 NaN  Look up table in Wiktionary, the free dictionary.,
-   vteVisualization of technical information  \
- 0                                    Fields   
- 1                               Image types   
- 2                                    People   
- 3                            Related topics   
- 
-          vteVisualization of technical information.1  
- 0  Biological data visualization Chemical imaging...  
- 1  Chart Diagram Engineering drawing Graph of a f...  
- 2  Jacques Bertin Cynthia Brewer Stuart Card Shee...  
- 3  Cartography Chartjunk Computer graphics in com...  ]</pre>
+<pre>one    9.25
+two   -5.80
+dtype: float64</pre>
 </div>
 
 </div>
@@ -14507,22 +15617,13 @@ dtype: float64</pre>
 </div>
 </div>
 
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>above shows all of the tabular data from the html file as a DataFrame object. the read_html method searches the code to find the <table> tags to find tabular data and then loads it.</p>
-
-</div>
-</div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[27]:</div>
+<div class="prompt input_prompt">In&nbsp;[48]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">table1</span> <span class="o">=</span> <span class="n">tables</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-<span class="n">table1</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;columns&#39;</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -14535,7 +15636,80 @@ dtype: float64</pre>
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[27]:</div>
+    <div class="prompt output_prompt">Out[48]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>a    1.40
+b    2.60
+c    0.00
+d   -0.55
+dtype: float64</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[49]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">idxmax</span><span class="p">()</span> <span class="c1">#returns index value where max or min value exists</span>
+<span class="n">df</span><span class="o">.</span><span class="n">idxmin</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[49]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>one    d
+two    b
+dtype: object</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[50]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">cumsum</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[50]:</div>
 
 
 
@@ -14558,65 +15732,30 @@ dtype: float64</pre>
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>First name</th>
-      <th>Last name</th>
-      <th>Age</th>
+      <th>one</th>
+      <th>two</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>0</th>
-      <td>Tinu</td>
-      <td>Elejogun</td>
-      <td>14</td>
+      <th>a</th>
+      <td>1.40</td>
+      <td>NaN</td>
     </tr>
     <tr>
-      <th>1</th>
-      <td>Blaszczyk</td>
-      <td>Kostrzewski</td>
-      <td>25</td>
+      <th>b</th>
+      <td>8.50</td>
+      <td>-4.5</td>
     </tr>
     <tr>
-      <th>2</th>
-      <td>Lily</td>
-      <td>McGarrett</td>
-      <td>18</td>
+      <th>c</th>
+      <td>NaN</td>
+      <td>NaN</td>
     </tr>
     <tr>
-      <th>3</th>
-      <td>Olatunkbo</td>
-      <td>Chijiaku</td>
-      <td>22</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>Adrienne</td>
-      <td>Anthoula</td>
-      <td>22</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>Axelia</td>
-      <td>Athanasios</td>
-      <td>22</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>Jon-Kabat</td>
-      <td>Zinn</td>
-      <td>22</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>Thabang</td>
-      <td>Mosoa</td>
-      <td>15</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>Kgaogelo</td>
-      <td>Mosoa</td>
-      <td>11</td>
+      <th>d</th>
+      <td>9.25</td>
+      <td>-5.8</td>
     </tr>
   </tbody>
 </table>
@@ -14628,26 +15767,13 @@ dtype: float64</pre>
 </div>
 </div>
 
-</div>
-<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
-</div><div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Interacting-with-Web-APIs">Interacting with Web APIs<a class="anchor-link" href="#Interacting-with-Web-APIs">&#182;</a></h2><p>a number of Websites provide APIs for data collection via JSON. There are a number of ways to accsess these APIs from python. the following is a simple way.<br>
-<br/>
-to find the last 30 GitHub issues for pandas we can make a get HTTP request using the add-on requests library:</p>
-
-</div>
-</div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[52]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">requests</span>
-<span class="n">url</span> <span class="o">=</span> <span class="s1">&#39;https://api.github.com/repos/pandas-dev/pandas/issues&#39;</span>
-<span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
-<span class="n">resp</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span> <span class="c1">#provides multiple statistics</span>
 </pre></div>
 
     </div>
@@ -14664,9 +15790,73 @@ to find the last 30 GitHub issues for pandas we can make a get HTTP request usin
 
 
 
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
 
-<div class="output_text output_subarea output_execute_result">
-<pre>&lt;Response [200]&gt;</pre>
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>one</th>
+      <th>two</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>3.000000</td>
+      <td>2.000000</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>3.083333</td>
+      <td>-2.900000</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>3.493685</td>
+      <td>2.262742</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>0.750000</td>
+      <td>-4.500000</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>1.075000</td>
+      <td>-3.700000</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>1.400000</td>
+      <td>-2.900000</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>4.250000</td>
+      <td>-2.100000</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>7.100000</td>
+      <td>-1.300000</td>
+    </tr>
+  </tbody>
+</table>
+</div>
 </div>
 
 </div>
@@ -14678,18 +15868,60 @@ to find the last 30 GitHub issues for pandas we can make a get HTTP request usin
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The Response object's json method will return a dictionary containing JSON parsed into native python objects:</p>
+<h3 id="Descriptive-Statistics-built-in">Descriptive Statistics built-in<a class="anchor-link" href="#Descriptive-Statistics-built-in">&#182;</a></h3><p>count -- numer of non-NA values<br>
+describe -- compute set of summary statistics for each df column<br>
+min, max -- compute min/max values<br>
+argmin, argmax -- compute index locations(integers) at which minimum, maximum value, obtained<br>
+idxmin, idxmax -- compute index labels at which minimum or maximum value obtained, respectively<br>
+quantile -- Compute sample quantile ranging from 0 to 1<br>
+sum -- Sum of values<br>
+mean -- Mean of values<br>
+median -- Arithmetic median (50% quantile) of values<br>
+mad -- Mean absolute deviation from mean value<br>
+prod -- Product of all values<br>
+var -- Sample variance of values<br>
+std -- Sample standard deviation of values<br>
+skew -- Sample skewness of values<br>
+kurt -- Sample kurtosis of values<br>
+cumsum -- Cumulative sum of values<br>
+cumin, cummax -- Cumulative minimum or maximum of values, respectively<br>
+cumprod -- Cumulative product of values<br>
+diff -- Compute first arithmetic difference (useful of time series)<br>
+pct_change -- Compute percent changes<br>
+.<br>
+.<br>
+.<br>
+.<br>
+.<br>
+.</p>
+<h1 id="Correlation-and-Covariance">Correlation and Covariance<a class="anchor-link" href="#Correlation-and-Covariance">&#182;</a></h1><p>Correlation and Covarience, are computed from pairs of arguments. Lets look at some DataFrames of stock prices and volumnes obtianed form yahoo! Finance using the add-on pandas-datareader package.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[60]:</div>
+<div class="prompt input_prompt">In&nbsp;[57]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">resp</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
-<span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pandas_datareader.data</span> <span class="k">as</span> <span class="nn">web</span>
+<span class="n">all_data</span> <span class="o">=</span> <span class="p">{</span><span class="n">ticker</span><span class="p">:</span> <span class="n">web</span><span class="o">.</span><span class="n">get_data_yahoo</span><span class="p">(</span><span class="n">ticker</span><span class="p">)</span> <span class="k">for</span> <span class="n">ticker</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;AAPL&#39;</span><span class="p">,</span> <span class="s1">&#39;IBM&#39;</span><span class="p">,</span> <span class="s1">&#39;MSFT&#39;</span><span class="p">,</span> <span class="s1">&#39;GOOG&#39;</span><span class="p">]}</span>
+<span class="n">price</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="n">ticker</span><span class="p">:</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Adj Close&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">ticker</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">all_data</span><span class="o">.</span><span class="n">items</span><span class="p">()})</span>
+<span class="n">volume</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="n">ticker</span><span class="p">:</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Volume&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">ticker</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">all_data</span><span class="o">.</span><span class="n">items</span><span class="p">()})</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[59]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">returns</span> <span class="o">=</span> <span class="n">price</span><span class="o">.</span><span class="n">pct_change</span><span class="p">()</span>
+<span class="n">returns</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
 </pre></div>
 
     </div>
@@ -14702,67 +15934,81 @@ to find the last 30 GitHub issues for pandas we can make a get HTTP request usin
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[60]:</div>
+    <div class="prompt output_prompt">Out[59]:</div>
 
 
 
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
 
-<div class="output_text output_subarea output_execute_result">
-<pre>{&#39;url&#39;: &#39;https://api.github.com/repos/pandas-dev/pandas/issues/35388&#39;,
- &#39;repository_url&#39;: &#39;https://api.github.com/repos/pandas-dev/pandas&#39;,
- &#39;labels_url&#39;: &#39;https://api.github.com/repos/pandas-dev/pandas/issues/35388/labels{/name}&#39;,
- &#39;comments_url&#39;: &#39;https://api.github.com/repos/pandas-dev/pandas/issues/35388/comments&#39;,
- &#39;events_url&#39;: &#39;https://api.github.com/repos/pandas-dev/pandas/issues/35388/events&#39;,
- &#39;html_url&#39;: &#39;https://github.com/pandas-dev/pandas/issues/35388&#39;,
- &#39;id&#39;: 664156158,
- &#39;node_id&#39;: &#39;MDU6SXNzdWU2NjQxNTYxNTg=&#39;,
- &#39;number&#39;: 35388,
- &#39;title&#39;: &#34;BUG: timezone-aware DatetimeIndex doesn&#39;t handle offsets very well&#34;,
- &#39;user&#39;: {&#39;login&#39;: &#39;rwijtvliet&#39;,
-  &#39;id&#39;: 4106013,
-  &#39;node_id&#39;: &#39;MDQ6VXNlcjQxMDYwMTM=&#39;,
-  &#39;avatar_url&#39;: &#39;https://avatars1.githubusercontent.com/u/4106013?v=4&#39;,
-  &#39;gravatar_id&#39;: &#39;&#39;,
-  &#39;url&#39;: &#39;https://api.github.com/users/rwijtvliet&#39;,
-  &#39;html_url&#39;: &#39;https://github.com/rwijtvliet&#39;,
-  &#39;followers_url&#39;: &#39;https://api.github.com/users/rwijtvliet/followers&#39;,
-  &#39;following_url&#39;: &#39;https://api.github.com/users/rwijtvliet/following{/other_user}&#39;,
-  &#39;gists_url&#39;: &#39;https://api.github.com/users/rwijtvliet/gists{/gist_id}&#39;,
-  &#39;starred_url&#39;: &#39;https://api.github.com/users/rwijtvliet/starred{/owner}{/repo}&#39;,
-  &#39;subscriptions_url&#39;: &#39;https://api.github.com/users/rwijtvliet/subscriptions&#39;,
-  &#39;organizations_url&#39;: &#39;https://api.github.com/users/rwijtvliet/orgs&#39;,
-  &#39;repos_url&#39;: &#39;https://api.github.com/users/rwijtvliet/repos&#39;,
-  &#39;events_url&#39;: &#39;https://api.github.com/users/rwijtvliet/events{/privacy}&#39;,
-  &#39;received_events_url&#39;: &#39;https://api.github.com/users/rwijtvliet/received_events&#39;,
-  &#39;type&#39;: &#39;User&#39;,
-  &#39;site_admin&#39;: False},
- &#39;labels&#39;: [{&#39;id&#39;: 76811,
-   &#39;node_id&#39;: &#39;MDU6TGFiZWw3NjgxMQ==&#39;,
-   &#39;url&#39;: &#39;https://api.github.com/repos/pandas-dev/pandas/labels/Bug&#39;,
-   &#39;name&#39;: &#39;Bug&#39;,
-   &#39;color&#39;: &#39;e10c02&#39;,
-   &#39;default&#39;: False,
-   &#39;description&#39;: None},
-  {&#39;id&#39;: 1954720290,
-   &#39;node_id&#39;: &#39;MDU6TGFiZWwxOTU0NzIwMjkw&#39;,
-   &#39;url&#39;: &#39;https://api.github.com/repos/pandas-dev/pandas/labels/Needs%20Triage&#39;,
-   &#39;name&#39;: &#39;Needs Triage&#39;,
-   &#39;color&#39;: &#39;0052cc&#39;,
-   &#39;default&#39;: False,
-   &#39;description&#39;: &#39;Issue that has not been reviewed by a pandas team member&#39;}],
- &#39;state&#39;: &#39;open&#39;,
- &#39;locked&#39;: False,
- &#39;assignee&#39;: None,
- &#39;assignees&#39;: [],
- &#39;milestone&#39;: None,
- &#39;comments&#39;: 0,
- &#39;created_at&#39;: &#39;2020-07-23T02:07:01Z&#39;,
- &#39;updated_at&#39;: &#39;2020-07-23T02:09:34Z&#39;,
- &#39;closed_at&#39;: None,
- &#39;author_association&#39;: &#39;NONE&#39;,
- &#39;active_lock_reason&#39;: None,
- &#39;body&#39;: &#34;- [x] I have checked that this issue has not already been reported.\r\n\r\n- [x] I have confirmed this bug exists on the latest version of pandas.\r\n\r\n- [ ] (optional) I have confirmed this bug exists on the master branch of pandas.\r\n\r\n---\r\n\r\n#### Code Sample, a copy-pastable example\r\n\r\n```python\r\nimport pandas as pd\r\ni = pd.date_range(&#39;2020-03-28&#39;, periods=4, freq=&#39;D&#39;, tz=&#39;Europe/Berlin&#39;)\r\ni # DatetimeIndex([&#39;2020-03-28 00:00:00+01:00&#39;,  &#39;2020-03-29 00:00:00+01:00&#39;, &#39;2020-03-30 00:00:00+02:00&#39;, &#39;2020-03-31 00:00:00+02:00&#39;], dtype=&#39;datetime64[ns, Europe/Berlin]&#39;, freq=&#39;D&#39;)\r\ni[0] + i.freq == i[1] #True\r\ni[2] + i.freq == i[3] #True\r\ni[1] + i.freq == i[2] #False (!)\r\n```\r\n\r\n#### Problem description\r\n\r\nVariably-spaced timestamps are not handled well, if the variation is caused by DST. The result of `i[1] + i.freq` is \r\n`Timestamp(&#39;2020-03-30 01:00:00+0200&#39;, tz=&#39;Europe/Berlin&#39;, freq=&#39;D&#39;)`, whereas \r\n`Timestamp(&#39;2020-03-30 00:00:00+0200&#39;, tz=&#39;Europe/Berlin&#39;, freq=&#39;D&#39;)` was expected.\r\n\r\nThis is in contrast to timestamps where the variation is caused by e.g. months being different lengths, which *are* handled correctly.\r\n\r\n#### Output of ``pd.show_versions()``\r\n\r\n&lt;details&gt;\r\n\r\nINSTALLED VERSIONS\r\n------------------\r\ncommit           : None\r\npython           : 3.8.3.final.0\r\npython-bits      : 64\r\nOS               : Windows\r\nOS-release       : 10\r\nmachine          : AMD64\r\nprocessor        : Intel64 Family 6 Model 158 Stepping 10, GenuineIntel\r\nbyteorder        : little\r\nLC_ALL           : None\r\nLANG             : en\r\nLOCALE           : de_DE.cp1252\r\n\r\npandas           : 1.0.5\r\nnumpy            : 1.18.5\r\npytz             : 2020.1\r\ndateutil         : 2.8.1\r\npip              : 20.1.1\r\nsetuptools       : 49.2.0.post20200714\r\nCython           : None\r\npytest           : 5.4.3\r\nhypothesis       : None\r\nsphinx           : None\r\nblosc            : None\r\nfeather          : None\r\nxlsxwriter       : None\r\nlxml.etree       : None\r\nhtml5lib         : 1.0.1\r\npymysql          : None\r\npsycopg2         : None\r\njinja2           : 2.11.2\r\nIPython          : 7.16.1\r\npandas_datareader: None\r\nbs4              : 4.9.1\r\nbottleneck       : None\r\nfastparquet      : None\r\ngcsfs            : None\r\nlxml.etree       : None\r\nmatplotlib       : 3.2.2\r\nnumexpr          : None\r\nodfpy            : None\r\nopenpyxl         : 3.0.4\r\npandas_gbq       : None\r\npyarrow          : None\r\npytables         : None\r\npytest           : 5.4.3\r\npyxlsb           : None\r\ns3fs             : None\r\nscipy            : 1.5.0\r\nsqlalchemy       : 1.3.18\r\ntables           : None\r\ntabulate         : None\r\nxarray           : None\r\nxlrd             : 1.2.0\r\nxlwt             : None\r\nxlsxwriter       : None\r\nnumba            : None\r\n\r\n&lt;/details&gt;\r\n&#34;,
- &#39;performed_via_github_app&#39;: None}</pre>
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>AAPL</th>
+      <th>IBM</th>
+      <th>MSFT</th>
+      <th>GOOG</th>
+    </tr>
+    <tr>
+      <th>Date</th>
+      <th></th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>2020-07-15</th>
+      <td>0.006877</td>
+      <td>0.019901</td>
+      <td>-0.001488</td>
+      <td>-0.004564</td>
+    </tr>
+    <tr>
+      <th>2020-07-16</th>
+      <td>-0.012305</td>
+      <td>0.008211</td>
+      <td>-0.019804</td>
+      <td>0.002880</td>
+    </tr>
+    <tr>
+      <th>2020-07-17</th>
+      <td>-0.002020</td>
+      <td>0.008870</td>
+      <td>-0.005100</td>
+      <td>-0.001614</td>
+    </tr>
+    <tr>
+      <th>2020-07-20</th>
+      <td>0.021074</td>
+      <td>0.010071</td>
+      <td>0.042981</td>
+      <td>0.033103</td>
+    </tr>
+    <tr>
+      <th>2020-07-21</th>
+      <td>0.000341</td>
+      <td>0.026747</td>
+      <td>-0.003544</td>
+      <td>0.002057</td>
+    </tr>
+  </tbody>
+</table>
+</div>
 </div>
 
 </div>
@@ -14770,13 +16016,21 @@ to find the last 30 GitHub issues for pandas we can make a get HTTP request usin
 </div>
 </div>
 
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The corr method of Series computes the correlation of the overlapping, non-NA aligned-by-index values in two series. Relatedly, cov computes the covarience</p>
+
+</div>
+</div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[61]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">data</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;title&#39;</span><span class="p">]</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">returns</span><span class="p">[</span><span class="s1">&#39;MSFT&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">corr</span><span class="p">(</span><span class="n">returns</span><span class="p">[</span><span class="s1">&#39;IBM&#39;</span><span class="p">])</span>
 </pre></div>
 
     </div>
@@ -14795,7 +16049,135 @@ to find the last 30 GitHub issues for pandas we can make a get HTTP request usin
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>&#34;BUG: timezone-aware DatetimeIndex doesn&#39;t handle offsets very well&#34;</pre>
+<pre>0.5921278584062394</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[62]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">returns</span><span class="p">[</span><span class="s1">&#39;MSFT&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">cov</span><span class="p">(</span><span class="n">returns</span><span class="p">[</span><span class="s1">&#39;IBM&#39;</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[62]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>0.00016595179395406258</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>DataFrame's corr and cov methods, on the other hand, return a full correlation or covariance matrix as a DataFrame, respectively:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[63]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">returns</span><span class="o">.</span><span class="n">corr</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[63]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>AAPL</th>
+      <th>IBM</th>
+      <th>MSFT</th>
+      <th>GOOG</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>AAPL</th>
+      <td>1.000000</td>
+      <td>0.526784</td>
+      <td>0.715336</td>
+      <td>0.669699</td>
+    </tr>
+    <tr>
+      <th>IBM</th>
+      <td>0.526784</td>
+      <td>1.000000</td>
+      <td>0.592128</td>
+      <td>0.542973</td>
+    </tr>
+    <tr>
+      <th>MSFT</th>
+      <td>0.715336</td>
+      <td>0.592128</td>
+      <td>1.000000</td>
+      <td>0.783817</td>
+    </tr>
+    <tr>
+      <th>GOOG</th>
+      <td>0.669699</td>
+      <td>0.542973</td>
+      <td>0.783817</td>
+      <td>1.000000</td>
+    </tr>
+  </tbody>
+</table>
+</div>
 </div>
 
 </div>
@@ -14809,8 +16191,7 @@ to find the last 30 GitHub issues for pandas we can make a get HTTP request usin
 <div class="prompt input_prompt">In&nbsp;[64]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">issues</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;number&#39;</span><span class="p">,</span> <span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;labels&#39;</span><span class="p">,</span> <span class="s1">&#39;state&#39;</span><span class="p">])</span>
-<span class="n">issues</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">returns</span><span class="o">.</span><span class="n">cov</span><span class="p">()</span>
 </pre></div>
 
     </div>
@@ -14846,82 +16227,40 @@ to find the last 30 GitHub issues for pandas we can make a get HTTP request usin
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>number</th>
-      <th>title</th>
-      <th>labels</th>
-      <th>state</th>
+      <th>AAPL</th>
+      <th>IBM</th>
+      <th>MSFT</th>
+      <th>GOOG</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th>0</th>
-      <td>35389</td>
-      <td>ENH: Request for `Index.to_string` &amp; `MultiInd...</td>
-      <td>[{'id': 76812, 'node_id': 'MDU6TGFiZWw3NjgxMg=...</td>
-      <td>open</td>
+      <th>AAPL</th>
+      <td>0.000332</td>
+      <td>0.000155</td>
+      <td>0.000227</td>
+      <td>0.000203</td>
     </tr>
     <tr>
-      <th>1</th>
-      <td>35388</td>
-      <td>BUG: timezone-aware DatetimeIndex doesn't hand...</td>
-      <td>[{'id': 76811, 'node_id': 'MDU6TGFiZWw3NjgxMQ=...</td>
-      <td>open</td>
+      <th>IBM</th>
+      <td>0.000155</td>
+      <td>0.000260</td>
+      <td>0.000166</td>
+      <td>0.000146</td>
     </tr>
     <tr>
-      <th>2</th>
-      <td>35387</td>
-      <td>Display dataframe name or title when using dis...</td>
-      <td>[{'id': 76812, 'node_id': 'MDU6TGFiZWw3NjgxMg=...</td>
-      <td>open</td>
+      <th>MSFT</th>
+      <td>0.000227</td>
+      <td>0.000166</td>
+      <td>0.000303</td>
+      <td>0.000227</td>
     </tr>
     <tr>
-      <th>3</th>
-      <td>35386</td>
-      <td>CLN: resolve isort mypy import confilict test_...</td>
-      <td>[]</td>
-      <td>open</td>
-    </tr>
-    <tr>
-      <th>4</th>
-      <td>35385</td>
-      <td>fix #35227</td>
-      <td>[]</td>
-      <td>open</td>
-    </tr>
-    <tr>
-      <th>5</th>
-      <td>35384</td>
-      <td>ENH: The parameter merge_cells parameter in fu...</td>
-      <td>[{'id': 76812, 'node_id': 'MDU6TGFiZWw3NjgxMg=...</td>
-      <td>open</td>
-    </tr>
-    <tr>
-      <th>6</th>
-      <td>35383</td>
-      <td>Drop similar rows of dataframe except for one ...</td>
-      <td>[{'id': 1954720290, 'node_id': 'MDU6TGFiZWwxOT...</td>
-      <td>open</td>
-    </tr>
-    <tr>
-      <th>7</th>
-      <td>35382</td>
-      <td>BUG: Inconsistent ordering of rows when mergin...</td>
-      <td>[{'id': 76811, 'node_id': 'MDU6TGFiZWw3NjgxMQ=...</td>
-      <td>open</td>
-    </tr>
-    <tr>
-      <th>8</th>
-      <td>35381</td>
-      <td>Storage options</td>
-      <td>[]</td>
-      <td>open</td>
-    </tr>
-    <tr>
-      <th>9</th>
-      <td>35380</td>
-      <td>CLN: resolve isort mypy import confilict test_...</td>
-      <td>[{'id': 211029535, 'node_id': 'MDU6TGFiZWwyMTE...</td>
-      <td>open</td>
+      <th>GOOG</th>
+      <td>0.000203</td>
+      <td>0.000146</td>
+      <td>0.000227</td>
+      <td>0.000277</td>
     </tr>
   </tbody>
 </table>
@@ -14937,9 +16276,52 @@ to find the last 30 GitHub issues for pandas we can make a get HTTP request usin
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><br/>
-<br/></p>
-<h1 id="Interacting-with-Databases">Interacting with Databases<a class="anchor-link" href="#Interacting-with-Databases">&#182;</a></h1><p>in the business settings many companies may store their data in SQL based relational databases such as SQL Server, PostgreSQ, and MySQL.  loading data from SQL into a DataFrame is fairly straightfoward, and pandas has some functions to simplify the process. As an Exmaple, lets create a SQLite database using Python's built-in sqlite3 driver</p>
+<p>DataFrames corrwith method, allows you to compute pairwise correlations between a DataFrame's columns or rows with another Series or DataFrame. passing a Series returns a Series with the correlations of percent changes with volume:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[65]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">returns</span><span class="o">.</span><span class="n">corrwith</span><span class="p">(</span><span class="n">returns</span><span class="o">.</span><span class="n">IBM</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[65]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>AAPL    0.526784
+IBM     1.000000
+MSFT    0.592128
+GOOG    0.542973
+dtype: float64</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Passing a DataFrame computes the correlations of matching column names. Below is computed correlations of percent changes with volume:</p>
 
 </div>
 </div>
@@ -14949,15 +16331,7 @@ to find the last 30 GitHub issues for pandas we can make a get HTTP request usin
 <div class="prompt input_prompt">In&nbsp;[66]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">sqlite3</span>
-<span class="n">query</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
-<span class="s2">CREATE TABLE test</span>
-<span class="s2">(a VARCHAR(20), b VARCHAR(20), </span>
-<span class="s2"> c REAL,        d INTEGER</span>
-<span class="s2">); &quot;&quot;&quot;</span>
-
-<span class="n">con</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">&#39;mydata.sqlite&#39;</span><span class="p">)</span>
-<span class="n">con</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">returns</span><span class="o">.</span><span class="n">corrwith</span><span class="p">(</span><span class="n">volume</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -14976,7 +16350,103 @@ to find the last 30 GitHub issues for pandas we can make a get HTTP request usin
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>&lt;sqlite3.Cursor at 0x2707bf59880&gt;</pre>
+<pre>AAPL   -0.132683
+IBM    -0.106003
+MSFT   -0.061536
+GOOG   -0.145615
+dtype: float64</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Unique-Values,-Value-Counts,-and-Membership">Unique Values, Value Counts, and Membership<a class="anchor-link" href="#Unique-Values,-Value-Counts,-and-Membership">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span> 
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[67]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">obj</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">])</span>
+<span class="n">uniques</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+<span class="n">uniques</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[67]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>array([&#39;c&#39;, &#39;a&#39;, &#39;d&#39;, &#39;b&#39;], dtype=object)</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[68]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">obj</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[68]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>a    3
+c    3
+b    2
+d    1
+dtype: int64</pre>
 </div>
 
 </div>
@@ -14990,12 +16460,7 @@ to find the last 30 GitHub issues for pandas we can make a get HTTP request usin
 <div class="prompt input_prompt">In&nbsp;[69]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># insert a few rows of data </span>
-<span class="n">data</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">&#39;Atlanta&#39;</span><span class="p">,</span> <span class="s1">&#39;Georgia&#39;</span><span class="p">,</span> <span class="mf">1.25</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
-         <span class="p">(</span><span class="s1">&#39;Tallahassee&#39;</span><span class="p">,</span> <span class="s1">&#39;Florida&#39;</span><span class="p">,</span> <span class="mf">2.6</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
-         <span class="p">(</span><span class="s1">&#39;Sacramento&#39;</span><span class="p">,</span> <span class="s1">&#39;California&#39;</span><span class="p">,</span> <span class="mf">1.7</span><span class="p">,</span> <span class="mi">5</span><span class="p">)]</span>
-<span class="n">stmt</span> <span class="o">=</span> <span class="s2">&quot;INSERT INTO test VALUES(?, ?, ?, ?)&quot;</span>
-<span class="n">con</span><span class="o">.</span><span class="n">executemany</span><span class="p">(</span><span class="n">stmt</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">obj</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -15014,7 +16479,11 @@ to find the last 30 GitHub issues for pandas we can make a get HTTP request usin
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>&lt;sqlite3.Cursor at 0x2707d703ab0&gt;</pre>
+<pre>c    3
+d    1
+a    3
+b    2
+dtype: int64</pre>
 </div>
 
 </div>
@@ -15025,14 +16494,10 @@ to find the last 30 GitHub issues for pandas we can make a get HTTP request usin
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[73]:</div>
+<div class="prompt input_prompt">In&nbsp;[70]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">con</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
-<span class="c1"># Most Python SQL drivers return a list of tuples whn selecting data from a talbe </span>
-<span class="n">cursor</span> <span class="o">=</span> <span class="n">con</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s1">&#39;select * from test&#39;</span><span class="p">)</span>
-<span class="n">rows</span> <span class="o">=</span> <span class="n">cursor</span><span class="o">.</span><span class="n">fetchall</span><span class="p">()</span>
-<span class="n">rows</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">obj</span>
 </pre></div>
 
     </div>
@@ -15045,15 +16510,103 @@ to find the last 30 GitHub issues for pandas we can make a get HTTP request usin
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[73]:</div>
+    <div class="prompt output_prompt">Out[70]:</div>
 
 
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>[(&#39;Atlanta&#39;, &#39;Georgia&#39;, 1.25, 6),
- (&#39;Tallahassee&#39;, &#39;Florida&#39;, 2.6, 3),
- (&#39;Sacramento&#39;, &#39;California&#39;, 1.7, 5)]</pre>
+<pre>0    c
+1    a
+2    d
+3    a
+4    a
+5    b
+6    b
+7    c
+8    c
+dtype: object</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[71]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">mask</span> <span class="o">=</span> <span class="n">obj</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">])</span>
+<span class="n">mask</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[71]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>0     True
+1    False
+2    False
+3    False
+4    False
+5     True
+6     True
+7     True
+8     True
+dtype: bool</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[72]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">obj</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[72]:</div>
+
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>0    c
+5    b
+6    b
+7    c
+8    c
+dtype: object</pre>
 </div>
 
 </div>
@@ -15065,7 +16618,7 @@ to find the last 30 GitHub issues for pandas we can make a get HTTP request usin
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>you can pass the list of tuples to the DataFrame constructor, but you need the column names, contained in the cursor's description attribute:</p>
+<p>Related to sinin is the Index.get_indexer method, which gives you an index array from an array of possibly non-distinct values into another array of distinct values:</p>
 
 </div>
 </div>
@@ -15075,7 +16628,9 @@ to find the last 30 GitHub issues for pandas we can make a get HTTP request usin
 <div class="prompt input_prompt">In&nbsp;[74]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">cursor</span><span class="o">.</span><span class="n">description</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">to_match</span><span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">])</span>
+<span class="n">unique_vals</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">])</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">Index</span><span class="p">(</span><span class="n">unique_vals</span><span class="p">)</span><span class="o">.</span><span class="n">get_indexer</span><span class="p">(</span><span class="n">to_match</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -15094,10 +16649,7 @@ to find the last 30 GitHub issues for pandas we can make a get HTTP request usin
 
 
 <div class="output_text output_subarea output_execute_result">
-<pre>((&#39;a&#39;, None, None, None, None, None, None),
- (&#39;b&#39;, None, None, None, None, None, None),
- (&#39;c&#39;, None, None, None, None, None, None),
- (&#39;d&#39;, None, None, None, None, None, None))</pre>
+<pre>array([0, 2, 1, 1, 0, 2], dtype=int64)</pre>
 </div>
 
 </div>
@@ -15105,13 +16657,25 @@ to find the last 30 GitHub issues for pandas we can make a get HTTP request usin
 </div>
 </div>
 
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In the case you want to create a histogram from a data frame you can do the following</p>
+
+</div>
+</div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[84]:</div>
+<div class="prompt input_prompt">In&nbsp;[76]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">rows</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">cursor</span><span class="o">.</span><span class="n">description</span><span class="p">])</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;Qu1&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">],</span> 
+                     <span class="s1">&#39;Qu2&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span>
+                     <span class="s1">&#39;Qu3&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">]})</span>
+<span class="n">data</span>
+            
 </pre></div>
 
     </div>
@@ -15124,7 +16688,7 @@ to find the last 30 GitHub issues for pandas we can make a get HTTP request usin
 
 <div class="output_area">
 
-    <div class="prompt output_prompt">Out[84]:</div>
+    <div class="prompt output_prompt">Out[76]:</div>
 
 
 
@@ -15147,33 +16711,218 @@ to find the last 30 GitHub issues for pandas we can make a get HTTP request usin
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>a</th>
-      <th>b</th>
-      <th>c</th>
-      <th>d</th>
+      <th>Qu1</th>
+      <th>Qu2</th>
+      <th>Qu3</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
-      <td>Atlanta</td>
-      <td>Georgia</td>
-      <td>1.25</td>
-      <td>6</td>
+      <td>1</td>
+      <td>2</td>
+      <td>1</td>
     </tr>
     <tr>
       <th>1</th>
-      <td>Tallahassee</td>
-      <td>Florida</td>
-      <td>2.60</td>
       <td>3</td>
+      <td>3</td>
+      <td>5</td>
     </tr>
     <tr>
       <th>2</th>
-      <td>Sacramento</td>
-      <td>California</td>
-      <td>1.70</td>
-      <td>5</td>
+      <td>4</td>
+      <td>1</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3</td>
+      <td>2</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>4</td>
+      <td>3</td>
+      <td>4</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[79]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">result</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">value_counts</span><span class="p">)</span>
+<span class="n">result</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[79]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Qu1</th>
+      <th>Qu2</th>
+      <th>Qu3</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>NaN</td>
+      <td>2.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2.0</td>
+      <td>2.0</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2.0</td>
+      <td>NaN</td>
+      <td>2.0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>1.0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[80]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">result</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt output_prompt">Out[80]:</div>
+
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Qu1</th>
+      <th>Qu2</th>
+      <th>Qu3</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>1.0</td>
+      <td>1.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.0</td>
+      <td>2.0</td>
+      <td>1.0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2.0</td>
+      <td>2.0</td>
+      <td>0.0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2.0</td>
+      <td>0.0</td>
+      <td>2.0</td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
     </tr>
   </tbody>
 </table>
